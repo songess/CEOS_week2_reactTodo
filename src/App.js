@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import TodoCard from './components/TodoCard';
+import TodoHeader from './components/TodoHeader';
 
 const DUMMYTOOLIST = [
   { todo: '공부하기', isdone: false },
@@ -30,6 +31,7 @@ function App() {
   return (
     <Layout>
       <TodoListLayout>
+        <TodoHeader />
         {DUMMYTOOLIST.map((todo, index) => {
           return <TodoCard key={index} todo={todo.todo} isdone={todo.isdone} />;
         })}
