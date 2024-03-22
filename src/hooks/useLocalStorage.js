@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function useLocalStorage() {
   const getTodoFromLocalStorage = (listName) => {
     return JSON.parse(localStorage.getItem(listName)) || [];

@@ -15,12 +15,19 @@ let TodoListHeaderBox = styled.div`
   color: #9e9e9e;
 `;
 
-export default function DoneSection({ doneList }) {
+export default function DoneSection({ doneList, deleteTodo }) {
   return (
     <DoneSectionLayout>
       <TodoListHeaderBox>done</TodoListHeaderBox>
       {doneList.map((todo, index) => {
-        return <TodoCard key={index} todo={todo.todo} isdone={todo.isdone} />;
+        return (
+          <TodoCard
+            key={index}
+            todo={todo.todo}
+            isdone={todo.isdone}
+            deleteTodo={deleteTodo}
+          />
+        );
       })}
     </DoneSectionLayout>
   );

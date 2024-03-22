@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TodoCard from './TodoCard';
 
@@ -15,12 +15,21 @@ let TodoListHeaderBox = styled.div`
   color: #9e9e9e;
 `;
 
-export default function TodoSection({ todoList }) {
+export default function TodoSection({ todoList, deleteTodo }) {
+  const clickHandler = (isdone, index) => {};
   return (
     <TodoSectionLayout>
       <TodoListHeaderBox>todo</TodoListHeaderBox>
       {todoList.map((todo, index) => {
-        return <TodoCard key={index} todo={todo.todo} isdone={todo.isdone} />;
+        return (
+          <TodoCard
+            key={index}
+            todo={todo.todo}
+            isdone={todo.isdone}
+            onClick={clickHandler(todo.isdone, index)}
+            deleteTodo={deleteTodo}
+          />
+        );
       })}
     </TodoSectionLayout>
   );

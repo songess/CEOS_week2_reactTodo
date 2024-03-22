@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as CheckBoxSvg } from '../assets/svg/CheckBox.svg';
 import { ReactComponent as CheckBoxOutlineSvg } from '../assets/svg/CheckBoxOutline.svg';
 import { ReactComponent as DeleteSvg } from '../assets/svg/Delete.svg';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 let TodoCardLayout = styled.div`
   width: 100%;
@@ -39,12 +40,29 @@ let TodoDeleteButton = styled.button`
   display: none;
 `;
 
-export default function TodoCard({ isdone, todo }) {
+export default function TodoCard({ isdone, todo, deleteTodo }) {
+  const { getTodoFromLocalStorage, setTodoToLocalStorage } = useLocalStorage();
+  const deleteHandler = () => {
+    isdone
+      ? setTodoToLocalStorage(
+          'doneList',
+          getTodoFromLocalStorage('doneList').filter(
+            (item) => item.todo !== todo
+          )
+        )
+      : setTodoToLocalStorage(
+          'todoList',
+          getTodoFromLocalStorage('todoList').filter(
+            (item) => item.todo !== todo
+          )
+        );
+    deleteTodo(todo);
+  };
   return (
     <TodoCardLayout>
       {isdone ? <CheckBoxSvg /> : <CheckBoxOutlineSvg />}
       <TodoCardParagraph>{todo}</TodoCardParagraph>
-      <TodoDeleteButton>
+      <TodoDeleteButton onClick={deleteHandler}>
         <DeleteSvg />
       </TodoDeleteButton>
     </TodoCardLayout>

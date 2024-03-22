@@ -39,17 +39,24 @@ let AddButton = styled.button`
   }
 `;
 
-export default function AddTodo() {
+export default function AddTodo({ addTodo }) {
   const { getTodoFromLocalStorage, setTodoToLocalStorage } = useLocalStorage();
   const [inputValue, setInputValue] = useState('');
   const addButtonHandler = () => {
+    let todoList = getTodoFromLocalStorage('todoList') || [];
     if (inputValue.trim() === '') {
-      return;
+      alert('할 일을 입력해주세요.');
+      console.log(1);
+    } else if (todoList.some((item) => item.todo === inputValue)) {
+      alert('이미 등록된 할 일입니다.');
+    } else {
+      todoList.push({ todo: inputValue, isdone: false });
+      console.log(todoList);
+      setTodoToLocalStorage('todoList', todoList);
+      addTodo({ todo: inputValue, isdone: false });
+      setInputValue('');
+      console.log(3);
     }
-    let todoList = getTodoFromLocalStorage('todoList');
-    todoList.push({ todo: inputValue, isdone: false });
-    setTodoToLocalStorage('todoList', todoList);
-    setInputValue('');
   };
   return (
     <AddTodoLayout>
@@ -65,7 +72,7 @@ export default function AddTodo() {
           }
         }}
       />
-      <AddButton>+</AddButton>
+      <AddButton onClick={addButtonHandler}>+</AddButton>
     </AddTodoLayout>
   );
 }

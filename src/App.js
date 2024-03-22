@@ -1,22 +1,11 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import AddTodo from './components/AddTodo';
 import DoneSection from './components/DoneSection';
 import TodoFooter from './components/TodoFooter';
 import TodoHeader from './components/TodoHeader';
 import TodoSection from './components/TodoSection';
-
-const DUMMYLOCALSTROAGETODOLIST = [
-  { todo: '공부하기', isdone: false },
-  { todo: '세수하기', isdone: true },
-];
-
-const DUMMYTODOLIST = DUMMYLOCALSTROAGETODOLIST.filter(
-  (todo) => todo.isdone === false
-);
-const DUMMYDONELIST = DUMMYLOCALSTROAGETODOLIST.filter(
-  (todo) => todo.isdone === true
-);
-console.log(DUMMYTODOLIST);
-console.log(DUMMYDONELIST);
+import useLocalStorage from './hooks/useLocalStorage';
 
 let Layout = styled.div`
   width: 100%;
@@ -41,13 +30,35 @@ let TodoListLayout = styled.div`
 `;
 
 function App() {
+  const [todoList, setTodoList] = useState([]);
+  const [doneList, setDoneList] = useState([]);
+  const { getTodoFromLocalStorage, setTodoToLocalStorage } = useLocalStorage();
+  useEffect(() => {
+    setTodoList(getTodoFromLocalStorage('todoList'));
+    setDoneList(getTodoFromLocalStorage('doneList'));
+  }, []);
+  const addTodo = (todo) => {
+    setTodoList((prev) => {
+      return [...prev, todo];
+    });
+    // setTodoToLocalStorage('todoList', todoList);2
+  };
+  const deleteTodo = (todo) => {
+    setTodoList((prev) => {
+      return prev.filter((item) => item.todo !== todo);
+    });
+  };
   return (
     <Layout>
       <TodoListLayout>
         <TodoHeader />
-        <TodoSection todoList={DUMMYTODOLIST} />
-        <DoneSection doneList={DUMMYDONELIST} />
-        <TodoFooter todoDoneCount={1} todoTotalCount={3} />
+        <TodoSection todoList={todoList} deleteTodo={deleteTodo}/>
+        <DoneSection doneList={doneList} deleteTodo={deleteTodo}/>
+        <AddTodo addTodo={addTodo} />
+        <TodoFooter
+          todoDoneCount={doneList.length}
+          todoTotalCount={doneList.length + todoList.length}
+        />
       </TodoListLayout>
     </Layout>
   );
