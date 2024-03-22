@@ -24,7 +24,6 @@ let TodoListHeaderBox = styled.div`
 `;
 
 export default function TodoSection({ todoList, deleteTodo, toggleTodo }) {
-  const clickHandler = (isdone, index) => {};
   return (
     <TodoSectionLayout>
       <TodoListHeaderBox>todo</TodoListHeaderBox>
@@ -35,7 +34,6 @@ export default function TodoSection({ todoList, deleteTodo, toggleTodo }) {
               key={index}
               todo={todo.todo}
               isdone={todo.isdone}
-              onClick={clickHandler(todo.isdone, index)}
               deleteTodo={deleteTodo}
               toggleTodo={toggleTodo}
             />

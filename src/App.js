@@ -24,8 +24,11 @@ let TodoListLayout = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   @media (max-width: 768px) {
     height: 100%;
+    border-radius: 0;
   }
 `;
 
@@ -33,18 +36,17 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [doneList, setDoneList] = useState([]);
   const { getTodoFromLocalStorage } = useLocalStorage();
+  const list = getTodoFromLocalStorage('todoList');
   useEffect(() => {
-    const list = getTodoFromLocalStorage('todoList');
     if (list) {
       setTodoList(list.filter((item) => !item.isdone));
       setDoneList(list.filter((item) => item.isdone));
     }
-  }, []);
+  }, [list]);
   const addTodo = (todo) => {
     setTodoList((prev) => {
       return [...prev, todo];
     });
-    // setTodoToLocalStorage('todoList', todoList);
   };
   const deleteTodo = (todo, isDone) => {
     if (isDone) {
