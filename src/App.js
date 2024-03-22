@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import DoneSection from './components/DoneSection';
-import TodoCard from './components/TodoCard';
+import TodoFooter from './components/TodoFooter';
 import TodoHeader from './components/TodoHeader';
 import TodoSection from './components/TodoSection';
 
@@ -47,6 +47,7 @@ function App() {
         <TodoHeader />
         <TodoSection todoList={DUMMYTODOLIST} />
         <DoneSection doneList={DUMMYDONELIST} />
+        <TodoFooter todoDoneCount={1} todoTotalCount={3} />
       </TodoListLayout>
     </Layout>
   );
