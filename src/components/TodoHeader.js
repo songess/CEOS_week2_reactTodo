@@ -28,8 +28,8 @@ export default function TodoHeader() {
     month: 'long',
     day: 'numeric',
   };
-  const todayString = today.toLocaleDateString('kr-kR', options);
-  const day = today.toLocaleDateString('en-US', { weekday: 'long' });
+  const todayString = today.toLocaleDateString('kr-KR', options);
+  const day = today.toLocaleDateString('kr-KR', { weekday: 'long' });
   return (
     <TodoHeaderLayout>
       <TodayStringSpan>{todayString}</TodayStringSpan>

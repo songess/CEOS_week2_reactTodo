@@ -24,6 +24,9 @@ let TodoCardLayout = styled.div`
 let TodoCardParagraph = styled.p`
   flex-grow: 1;
 `;
+let CheckboxBox = styled.div`
+  flex-shrink: 0;
+`;
 
 let TodoDeleteButton = styled.button`
   width: 1.5rem;
@@ -33,6 +36,7 @@ let TodoDeleteButton = styled.button`
   align-items: center;
   justify-content: center;
   border: none;
+  flex-shrink: 0;
   cursor: pointer;
   &:hover {
     background-color: gray;
@@ -40,27 +44,27 @@ let TodoDeleteButton = styled.button`
   display: none;
 `;
 
-export default function TodoCard({ isdone, todo, deleteTodo }) {
+export default function TodoCard({ isdone, todo, deleteTodo, toggleTodo }) {
   const { getTodoFromLocalStorage, setTodoToLocalStorage } = useLocalStorage();
-  const deleteHandler = () => {
-    isdone
-      ? setTodoToLocalStorage(
-          'doneList',
-          getTodoFromLocalStorage('doneList').filter(
-            (item) => item.todo !== todo
-          )
-        )
-      : setTodoToLocalStorage(
-          'todoList',
-          getTodoFromLocalStorage('todoList').filter(
-            (item) => item.todo !== todo
-          )
-        );
-    deleteTodo(todo);
+  const deleteHandler = (e) => {
+    e.stopPropagation();
+    setTodoToLocalStorage(
+      getTodoFromLocalStorage().filter((item) => item.todo !== todo)
+    );
+    deleteTodo(todo, isdone);
+  };
+  const toggleHandler = () => {
+    let todoList = getTodoFromLocalStorage();
+    let target = todoList.find((item) => item.todo === todo);
+    target.isdone = !target.isdone;
+    setTodoToLocalStorage(todoList);
+    toggleTodo(todo, isdone);
   };
   return (
-    <TodoCardLayout>
-      {isdone ? <CheckBoxSvg /> : <CheckBoxOutlineSvg />}
+    <TodoCardLayout onClick={toggleHandler}>
+      <CheckboxBox>
+        {isdone ? <CheckBoxSvg /> : <CheckBoxOutlineSvg />}
+      </CheckboxBox>
       <TodoCardParagraph>{todo}</TodoCardParagraph>
       <TodoDeleteButton onClick={deleteHandler}>
         <DeleteSvg />

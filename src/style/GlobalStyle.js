@@ -37,10 +37,6 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-
-.scroll-box::-webkit-scrollbar {
-  display: none;
-}
 `;
 
 export default GlobalStyle;

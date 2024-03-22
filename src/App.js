@@ -32,28 +32,54 @@ let TodoListLayout = styled.div`
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [doneList, setDoneList] = useState([]);
-  const { getTodoFromLocalStorage, setTodoToLocalStorage } = useLocalStorage();
+  const { getTodoFromLocalStorage } = useLocalStorage();
   useEffect(() => {
-    setTodoList(getTodoFromLocalStorage('todoList'));
-    setDoneList(getTodoFromLocalStorage('doneList'));
+    const list = getTodoFromLocalStorage('todoList');
+    if (list) {
+      setTodoList(list.filter((item) => !item.isdone));
+      setDoneList(list.filter((item) => item.isdone));
+    }
   }, []);
   const addTodo = (todo) => {
     setTodoList((prev) => {
       return [...prev, todo];
     });
-    // setTodoToLocalStorage('todoList', todoList);2
+    // setTodoToLocalStorage('todoList', todoList);
   };
-  const deleteTodo = (todo) => {
-    setTodoList((prev) => {
-      return prev.filter((item) => item.todo !== todo);
-    });
+  const deleteTodo = (todo, isDone) => {
+    if (isDone) {
+      setDoneList((prev) => {
+        return prev.filter((item) => item.todo !== todo);
+      });
+    } else {
+      setTodoList((prev) => {
+        return prev.filter((item) => item.todo !== todo);
+      });
+    }
+  };
+  const toggleTodo = (todo, isDone) => {
+    if (isDone) {
+      setDoneList((prev) => prev.filter((item) => item.todo !== todo));
+      setTodoList((prev) => [...prev, { todo, isdone: false }]);
+    } else {
+      setTodoList((prev) => prev.filter((item) => item.todo !== todo));
+      setDoneList((prev) => [...prev, { todo, isdone: true }]);
+    }
   };
   return (
     <Layout>
       <TodoListLayout>
         <TodoHeader />
-        <TodoSection todoList={todoList} deleteTodo={deleteTodo}/>
-        <DoneSection doneList={doneList} deleteTodo={deleteTodo}/>
+        <TodoSection
+          todoList={todoList}
+          deleteTodo={deleteTodo}
+          toggleTodo={toggleTodo}
+        />
+        <DoneSection
+          doneList={doneList}
+          deleteTodo={deleteTodo}
+          toggleTodo={toggleTodo}
+        />
         <AddTodo addTodo={addTodo} />
         <TodoFooter
           todoDoneCount={doneList.length}

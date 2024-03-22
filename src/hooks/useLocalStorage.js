@@ -1,9 +1,9 @@
 export default function useLocalStorage() {
-  const getTodoFromLocalStorage = (listName) => {
-    return JSON.parse(localStorage.getItem(listName)) || [];
+  const getTodoFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem('todoList')) || [];
   };
-  const setTodoToLocalStorage = (listName, todoList) => {
-    localStorage.setItem(listName, JSON.stringify(todoList));
+  const setTodoToLocalStorage = (todoList) => {
+    localStorage.setItem('todoList', JSON.stringify(todoList));
   };
   return { getTodoFromLocalStorage, setTodoToLocalStorage };
 }
