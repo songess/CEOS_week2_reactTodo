@@ -8,12 +8,18 @@ let DoneSectionLayout = styled.div`
   flex-direction: column;
   flex: 1 1;
   overflow-y: scroll;
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 let DoneContentBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 let TodoListHeaderBox = styled.div`
   font-size: 0.75rem;

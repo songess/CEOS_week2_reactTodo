@@ -9,12 +9,15 @@ import useLocalStorage from './hooks/useLocalStorage';
 
 let Layout = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #efd8d8;
+  @media (max-width: 768px) {
+    background-color: white;
+  }
 `;
 
 let TodoListLayout = styled.div`

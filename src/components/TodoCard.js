@@ -6,8 +6,8 @@ import { ReactComponent as DeleteSvg } from '../assets/svg/Delete.svg';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 let TodoCardLayout = styled.div`
-  width: 100%;
-  height: 2.5rem;
+  width: 840px;
+  height: fit-content;
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;

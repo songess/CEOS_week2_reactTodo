@@ -8,6 +8,9 @@ let TodoSectionLayout = styled.div`
   flex-direction: column;
   flex: 1 1;
   overflow-y: scroll;
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 let TodoContentBox = styled.div`
   width: 100%;
@@ -15,6 +18,9 @@ let TodoContentBox = styled.div`
   flex-direction: column;
   flex: 1 1;
   overflow-y: scroll;
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 let TodoListHeaderBox = styled.div`
   font-size: 0.75rem;
